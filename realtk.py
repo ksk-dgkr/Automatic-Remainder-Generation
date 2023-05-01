@@ -255,8 +255,8 @@ def processing(mytext):
                                 key1 = rem[word.casefold()]#+' '+str(pobj)
                                 break
                         value = ' '.join(list1)
-                        print("value",value,"value"*50)
-                        print("mysample",mysample,"mysample"*50)
+                        print("value",value)
+                        print("mysample",mysample)
                         #print(key1)
                         if flag:
                             #nowdt=datetime.now().strftime('%H:%M:%S')
