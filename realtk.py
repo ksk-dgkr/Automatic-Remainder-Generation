@@ -32,7 +32,7 @@ top=object()
 #The recording is done as a thread to prevent it being the main process
 def add_rem(rem):
     try:
-        d=rem[1]
+        d = rem[1]
         service = get_calendar_service()
         #d = datetime.now().date()
         tomorrow = datetime(d.year, d.month, d.day, d.hour,d.minute)
@@ -97,7 +97,7 @@ def processing(mytext):
                 # example = "Hey Snigdha, how are you? It's been a long time. Yeah I am good. How is everything at your place ? Yeah everything's fine. All of our friends are planning something. Will it be possible for you to attend a get-together on 4 October?. Oh yes. I will definetly come. When does it start? The meet starts at 10 AM. Please come along with your family. Yeah sure. See you there. Alright bye"
                 # example = "Hello doctor. Hello. Take a seat. Tell me what your problem is. I have been suffering from fever for the past 2 days. Okay, let me check your temperature. It's 103 degrees. You have high fever. Take this medicine at 2 PM today. If the fever does not subdue, take a corona test tomorrow. Meet me at 3 PM this wednesday."
                 sen_doc = nlp(mytext)
-                print("here6 after nlp")
+                #print("here6 after nlp")
                 sentences = list(sen_doc.sents)
                 # print(sentences)
                 present_perfect=['had been','have been','has been']
@@ -263,13 +263,13 @@ def processing(mytext):
                             nowdt=str(datetime.now())
 
                             rem_list[key1] = value
-                            print(str(pobj),"ssssssssssssssssssssssssssssssssssssss")
+                            #print(str(pobj),"ssssssssssssssssssssssssssssssssssssss")
                         else:
                             #nowdt=datetime.now().strftime('%H:%M:%S')
                             nowdt=str(datetime.now())
                             #rem_list[key] = value
                             rem_list[mysample]=value
-                            print(str(pobj),"gggggggggggggggggggggg")
+                            #print(str(pobj),"gggggggggggggggggggggg")
                     print("rem_list:",rem_list) 
                     r_list={}
                 if len(rem_list)>0:
@@ -330,7 +330,6 @@ def recognizing_speech(myfile):
 
     r = sr.Recognizer()
 
-
     with sr.AudioFile(AUDIO_FILE) as source:
         #reads the audio file. Here we use record instead of
         #listen*
@@ -338,20 +337,19 @@ def recognizing_speech(myfile):
         audio = r.record(source)
 
     try:
-        mytext=r.recognize_google(audio)
+        import app
+        #mytext = r.recognize_google(audio)
+        mytext = app.toText(audio)
         print("The audio file contains: " + mytext)
-        mytext = addpunctuation(mytext)
-        print("Added punctuation",mytext)
+        #mytext = addpunctuation(mytext)
+        #print("Added punctuation",mytext)
         processing(mytext)
 
     except sr.UnknownValueError:
-        print("Google Speech Recognition could not understand audio")
+        print("AssemblyAI could not understand audio")
 
     except sr.RequestError as e:
-        print("Could not request results from Google Speech Recognition service; {0}".format(e))
-
-
-
+        print("Could not request results from AssemblyAI service; {0}".format(e))
 
 t1=object()
 def threading_rec(x):

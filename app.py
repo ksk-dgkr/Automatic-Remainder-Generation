@@ -11,18 +11,20 @@ ai1 = AssemblyAI(API_KEY)
 # print(response_upload_by_url.json())
 
 #Exampel 1.2 Upload Media File (With A Local File)
-media_file_path = r'ttsMP3.com_VoiceText_2023-3-23_15_19_1.mp3'
-response_upload_by_file = ai1.upload_audio_by_file(media_file_path)
-print(response_upload_by_file.json())
-response_json_output = response_upload_by_file.json()
-transcript_id = response_json_output['id']
-print("transcript_id:", transcript_id)
+def toText(audio):
+    media_file_path = r'trial.wav'
+    response_upload_by_file = ai1.upload_audio_by_file(media_file_path)
+    #print(response_upload_by_file.json())
+    response_json_output = response_upload_by_file.json()
+    transcript_id = response_json_output['id']
+    print("transcript_id:", transcript_id)
 
-#Step 2. Retrieve Job Status
+    #Step 2. Retrieve Job Status
 
-while (True):
-    response_status = ai1.retrieve_transcript(transcript_id)
-    if response_status['status'] == "completed":
-        print("status:", response_status['status'])
-        print("text:", response_status['text'])
-        break
+    while (True):
+        response_status = ai1.retrieve_transcript(transcript_id)
+        if response_status['status'] == "completed":
+            print("status:", response_status['status'])
+            print("text:", response_status['text'])
+            break
+    return response_status['text']
