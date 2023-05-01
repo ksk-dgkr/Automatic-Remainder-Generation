@@ -11,7 +11,7 @@ ai1 = AssemblyAI(API_KEY)
 # print(response_upload_by_url.json())
 
 #Exampel 1.2 Upload Media File (With A Local File)
-media_file_path = r'ttsMP3.com_VoiceText_2023-3-26_7_58_37.mp3'
+media_file_path = r'ttsMP3.com_VoiceText_2023-3-23_15_19_1.mp3'
 response_upload_by_file = ai1.upload_audio_by_file(media_file_path)
 print(response_upload_by_file.json())
 response_json_output = response_upload_by_file.json()
