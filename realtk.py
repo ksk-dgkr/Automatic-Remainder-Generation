@@ -1,3 +1,19 @@
+from google.oauth2.credentials import Credentials
+from googleapiclient.discovery import build
+from google_auth_oauthlib.flow import InstalledAppFlow
+import os
+
+SCOPES = ['https://www.googleapis.com/auth/calendar']
+
+creds = None
+if os.path.exists('token.json'):
+    creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+else:
+    flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
+    creds = flow.run_local_server(port = 0)
+
+service = build('calendar', 'v3', credentials = creds)
+
 import tkinter
 import sounddevice as sd
 from tkinter import *
@@ -33,7 +49,7 @@ top=object()
 def add_rem(rem):
     try:
         d = rem[1]
-        service = get_calendar_service()
+        #service = get_calendar_service()
         #d = datetime.now().date()
         tomorrow = datetime(d.year, d.month, d.day, d.hour,d.minute)
         start = tomorrow.isoformat()
@@ -127,7 +143,7 @@ def processing(mytext):
                     list1 = []
                     list2 = []
                     pobj=''
-                    notpobj = ['AM','PM','am','pm','January','january','February','february','March','march','April','april','May','may','June','june','July','july','August','august','September','september','October','october','November','november','December','december']
+                    notpobj = ['P.m.', 'A.m.','A.M.','P.M.','p.m.','a.m.','AM','PM','am','pm','January','january','February','february','March','march','April','april','May','may','June','june','July','july','August','august','September','september','October','october','November','november','December','december']
                     words = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
                     #rem = {'appointment': 'Your appointment at', 'meet': 'Your meeting at ', 'meeting': 'Your meeting at',
                     #       'medicine': 'Take medicines at', 'medicines': 'Take medicines at', 'come': 'Your Meeting at','tablet': 'Take medicines at',
@@ -311,19 +327,20 @@ def processing(mytext):
 
 
 
-def addpunctuation(mytext):
-    url = "http://bark.phon.ioc.ee/punctuator"
-    #global mytext
-    headers = CaseInsensitiveDict()
-    headers["Content-Type"] = "application/x-www-form-urlencoded"
-    data=f"text={mytext} "
+# def addpunctuation(mytext):
+#     url = "http://bark.phon.ioc.ee/punctuator"
+#     #global mytext
+#     headers = CaseInsensitiveDict()
+#     headers["Content-Type"] = "application/x-www-form-urlencoded"
+#     data=f"text={mytext} "
 
-    resp = requests.post(url, headers=headers, data=data)
-    #print(resp.text)
-    mytext=resp.text
-    return mytext
+#     resp = requests.post(url, headers=headers, data=data)
+#     #print(resp.text)
+#     mytext=resp.text
+#     return mytext
 
 def recognizing_speech(myfile):
+    
     AUDIO_FILE = myfile
 
     # use the audio file as the audio source
@@ -352,6 +369,7 @@ def recognizing_speech(myfile):
         print("Could not request results from AssemblyAI service; {0}".format(e))
 
 t1=object()
+
 def threading_rec(x):
    global t1
    if x == 1:
